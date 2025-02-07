@@ -1,0 +1,36 @@
+def get_roman_variations():
+    """Return a dictionary of Roman numerals for numbers 1 to 23."""
+    roman_numerals = {
+        1: "I", 2: "II", 3: "III", 4: "IV", 5: "V", 
+        6: "VI", 7: "VII", 8: "VIII", 9: "IX", 10: "X", 
+        11: "XI", 12: "XII", 13: "XIII", 14: "XIV", 15: "XV", 
+        16: "XVI", 17: "XVII", 18: "XVIII", 19: "XIX", 20: "XX", 
+        21: "XXI", 22: "XXII", 23: "XXIII"
+    }
+    return roman_numerals
+
+def apply_roman_to_sequence(roman, sequence):
+    """Apply a Roman numeral to a fixed sequence and mark positions."""
+    sequence_list = list(sequence)
+    mapped_sequence = ['_' for _ in sequence]  # Default placeholders
+    
+    for char in roman:
+        if char in sequence_list:
+            idx = sequence_list.index(char)
+            mapped_sequence[idx] = char
+            sequence_list[idx] = '_'  # Mark position as used
+    
+    return ''.join(mapped_sequence)
+
+def show_roman_mappings():
+    """Print Roman numeral variations and their corresponding sequence positions."""
+    sequence = "XIXIVIII"
+    roman_numerals = get_roman_variations()
+    
+    print("Mapping Roman numerals to sequence positions:")
+    for number, roman in roman_numerals.items():
+        mapped_sequence = apply_roman_to_sequence(roman, sequence)
+        print(f"{number}: {roman} -> {mapped_sequence}")
+
+if _name_ == "_main_":
+    show_roman_mappings()

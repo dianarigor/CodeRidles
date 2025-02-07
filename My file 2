@@ -1,0 +1,50 @@
+#include <iostream>
+#include <map>
+#include <string>
+#include <vector>
+
+// Function to get Roman numeral variations
+std::map<int, std::string> getRomanVariations() {
+    return {
+        {1, "I"}, {2, "II"}, {3, "III"}, {4, "IV"}, {5, "V"},
+        {6, "VI"}, {7, "VII"}, {8, "VIII"}, {9, "IX"}, {10, "X"},
+        {11, "XI"}, {12, "XII"}, {13, "XIII"}, {14, "XIV"}, {15, "XV"},
+        {16, "XVI"}, {17, "XVII"}, {18, "XVIII"}, {19, "XIX"}, {20, "XX"},
+        {21, "XXI"}, {22, "XXII"}, {23, "XXIII"}
+    };
+}
+
+// Function to apply Roman numerals to a fixed sequence
+std::string applyRomanToSequence(const std::string& roman, const std::string& sequence) {
+    std::string result(sequence.size(), '_'); // Initialize with placeholders
+    std::vector<bool> used(sequence.size(), false);
+    
+    for (char ch : roman) {
+        for (size_t i = 0; i < sequence.size(); ++i) {
+            if (sequence[i] == ch && !used[i]) {
+                result[i] = ch;
+                used[i] = true;
+                break;
+            }
+        }
+    }
+    
+    return result;
+}
+
+// Function to display the Roman numeral mappings
+void showRomanMappings() {
+    std::string sequence = "XIXIVIII";
+    std::map<int, std::string> romanNumerals = getRomanVariations();
+    
+    std::cout << "Mapping Roman numerals to sequence positions:" << std::endl;
+    for (const auto& [number, roman] : romanNumerals) {
+        std::string mappedSequence = applyRomanToSequence(roman, sequence);
+        std::cout << number << ": " << roman << " -> " << mappedSequence << std::endl;
+    }
+}
+
+int main() {
+    showRomanMappings();
+    return 0;
+}

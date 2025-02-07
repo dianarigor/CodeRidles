@@ -1,0 +1,49 @@
+def roman_numerals_1_to_59():
+    """Returns the Roman numeral representations for numbers 1 to 59."""
+    roman_numerals = {
+        1: "I", 2: "II", 3: "III", 4: "IV", 5: "V", 
+        6: "VI", 7: "VII", 8: "VIII", 9: "IX", 10: "X", 
+        11: "XI", 12: "XII", 13: "XIII", 14: "XIV", 15: "XV", 
+        16: "XVI", 17: "XVII", 18: "XVIII", 19: "XIX", 20: "XX", 
+        21: "XXI", 22: "XXII", 23: "XXIII", 24: "XXIV", 25: "XXV", 
+        26: "XXVI", 27: "XXVII", 28: "XXVIII", 29: "XXIX", 30: "XXX", 
+        31: "XXXI", 32: "XXXII", 33: "XXXIII", 34: "XXXIV", 35: "XXXV", 
+        36: "XXXVI", 37: "XXXVII", 38: "XXXVIII", 39: "XXXIX", 40: "XL", 
+        41: "XLI", 42: "XLII", 43: "XLIII", 44: "XLIV", 45: "XLV", 
+        46: "XLVI", 47: "XLVII", 48: "XLVIII", 49: "XLIX", 50: "L", 
+        51: "LI", 52: "LII", 53: "LIII", 54: "LIV", 55: "LV", 
+        56: "LVI", 57: "LVII", 58: "LVIII", 59: ["LIX", "LVIIII"]
+    }
+    return roman_numerals
+
+def color_roman_to_positions(roman_str, sequence):
+    """Color the positions of Roman numerals in a fixed sequence."""
+    sequence_list = list(sequence)
+    result = ['_' for _ in sequence]  # Default empty placeholders
+    
+    for char in roman_str:
+        if char in sequence_list:
+            idx = sequence_list.index(char)
+            result[idx] = char
+            sequence_list[idx] = '_'  # Mark the position as used
+    
+    return ''.join(result)
+
+def print_mapped_variations():
+    """Print the Roman numeral variations and their mapped positions in the sequence."""
+    sequence = "XLXXIXIVIII"
+    roman_numerals = roman_numerals_1_to_59()
+    
+    print("Mapping Roman numerals to sequence positions:")
+    for num, variations in roman_numerals.items():
+        # Handle both single and multiple variations for a number
+        if isinstance(variations, list):
+            for var in variations:
+                colored = color_roman_to_positions(var, sequence)
+                print(f"{num}: {var} -> {colored}")
+        else:
+            colored = color_roman_to_positions(variations, sequence)
+            print(f"{num}: {variations} -> {colored}")
+
+if _name_ == "_main_":
+    print_mapped_variations()

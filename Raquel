@@ -1,0 +1,76 @@
+ficheiro 2, horas.py:
+class RomanNumeralMapper:
+   """Class to generate and map Roman numerals onto a fixed sequence."""
+   def __init__(self, sequence):
+       self.sequence = sequence
+       self.roman_map = self._generate_roman_variations()
+   def _generate_roman_variations(self):
+       """Generate a dictionary of Roman numerals from 1 to 23."""
+       return {
+           1: "I", 2: "II", 3: "III", 4: "IV", 5: "V",
+           6: "VI", 7: "VII", 8: "VIII", 9: "IX", 10: "X",
+           11: "XI", 12: "XII", 13: "XIII", 14: "XIV", 15: "XV",
+           16: "XVI", 17: "XVII", 18: "XVIII", 19: "XIX", 20: "XX",
+           21: "XXI", 22: "XXII", 23: "XXIII"
+       }
+   def map_to_sequence(self, roman):
+       """Map Roman numeral characters to specific positions in the sequence."""
+       mapped = ['_' for _ in self.sequence]
+       for char in roman:
+           try:
+               idx = self.sequence.index(char)  # Find first available position
+               mapped[idx] = char
+               self.sequence = self.sequence[:idx] + '_' + self.sequence[idx + 1:]  # Mark as used
+           except ValueError:
+               pass  # Ignore if character doesn't exist in the sequence
+       return ''.join(mapped)
+   def display_mappings(self):
+       """Display all Roman numeral mappings."""
+       print("Mapping Roman numerals to sequence positions:")
+       for number, roman in self.roman_map.items():
+           original_sequence = self.sequence
+           mapped_sequence = self.map_to_sequence(roman)
+           self.sequence = original_sequence  # Restore sequence for next iteration
+           print(f"{number}: {roman} -> {mapped_sequence}")
+if __name__ == "__main__":
+   mapper = RomanNumeralMapper("XIXIVIII")
+   mapper.display_mappings()
+ficheiro 1 minutos.py: def int_to_roman_r... por Raquel Eusébio
+22:22
+Raquel Eusébio
+ficheiro 1 minutos.py:
+def int_to_roman_recursive(n):
+   """Recursively convert an integer to its Roman numeral representation."""
+   roman_lookup = {
+       50: "L", 40: "XL", 10: "X", 9: "IX", 5: "V", 4: "IV", 1: "I"
+   }
+   if n == 0:
+       return ""
+   for value in roman_lookup:
+       if n >= value:
+           return roman_lookup[value] + int_to_roman_recursive(n - value)
+def generate_roman_numerals():
+   """Generate Roman numerals for numbers 1 to 59 using recursion."""
+   return {n: int_to_roman_recursive(n) for n in range(1, 60)}
+def map_roman_to_sequence_v2(roman, sequence):
+   """Map Roman numeral characters to positions in a fixed sequence using a dictionary."""
+   sequence_dict = {char: idx for idx, char in enumerate(sequence)}
+   result = ['_' for _ in sequence]
+   for char in roman:
+       if char in sequence_dict:
+           idx = sequence_dict[char]
+           result[idx] = char
+           sequence_dict[char] = -1  # Mark position as used
+   return ''.join(result)
+def display_mapped_variations():
+   """Display Roman numeral variations mapped to sequence positions."""
+   sequence = "XLXXIXIVIII"
+   roman_numerals = generate_roman_numerals()
+   print("Mapping Roman numerals to sequence positions:")
+   for num, roman in roman_numerals.items():
+       mapped = map_roman_to_sequence_v2(roman, sequence)
+       print(f"{num}: {roman} -> {mapped}")
+if __name__ == "__main__":
+   display_mapped_variations()
+tem menu de contexto
+
